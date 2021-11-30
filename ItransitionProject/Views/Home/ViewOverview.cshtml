@@ -1,0 +1,22 @@
+﻿@*@model ItransitionProject.Models.Overview*@
+@model ItransitionProject.Models.Overview
+<form>           
+    <img src="@Model.PictureOverview" class="card-img-top"/>
+    <div class="body">
+        <div class="title">
+            <h5>@Model.Title</h5>
+        </div>
+        <div class="text">
+            <p>@Model.TextOverview</p>
+        </div>
+        <div class="text">
+            <p>@Html.DisplayFor(model=>model.FkgroupNavigation.GroupName)</p>
+        </div>
+        <div class="text">
+           @foreach(var item in Model.OverTags)
+           {
+            <p>@Html.DisplayFor(model=>item.FktagNavigation.TagName)</p>
+           }
+        </div>
+    </div>               
+</form>

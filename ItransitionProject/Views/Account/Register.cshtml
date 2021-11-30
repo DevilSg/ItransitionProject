@@ -1,0 +1,54 @@
+﻿@model ItransitionProject.ViewModels.RegisterModel
+@{
+    ViewBag.Title = "Register";
+}
+
+
+
+
+@*<form method=post
+      oninput='up2.setCustomValidity(up2.value != ClientPassword.value ? "Passwords do not match." : "")' asp-action="registration" asp-controller="home">
+  <div class="row mb-3">
+    <label asp-for="UserName" class="col-sm-2 col-form-label">Name</label>
+    <div class="col-sm-10">
+      <input type="text" asp-for="UserName" class="form-control" />
+    </div>
+  </div>
+  <div class="row mb-3">
+    <label asp-for="UserPassword" class="col-sm-2 col-form-label">Password</label>
+    <div class="col-sm-10">
+      <input   type="password" asp-for="UserPassword" class="form-control"  >
+    </div>
+  </div>
+  <div class="row mb-3">
+    <label class="col-sm-2 col-form-label">Confirm Password</label>
+    <div class="col-sm-10">
+      <input  type="password" class="form-control" name=up2>
+    </div>
+  </div>      
+  <button type="submit" class="btn btn-primary">Sign in</button>
+</form>
+*@
+<form asp-action="Register" asp-controller="Account" asp-anti-forgery="true">
+    <div class="validation" asp-validation-summary="ModelOnly"></div>
+    <div>
+        <div>
+            <label asp-for="UserName">Введите Имя</label><br />
+            <input type="text" asp-for="UserName" />
+            <span asp-validation-for="UserName" />
+        </div>
+        <div>
+            <label asp-for="UserPassword">Введите пароль</label><br />
+            <input asp-for="UserPassword" />
+            <span asp-validation-for="UserPassword" />
+        </div>
+        <div>
+            <label asp-for="ConfirmPassword">Повторите пароль</label><br />
+            <input asp-for="ConfirmPassword" />
+            <span asp-validation-for="ConfirmPassword" />
+        </div>
+        <div>
+            <input type="submit" value="Регистрация" />
+        </div>
+    </div>
+</form>

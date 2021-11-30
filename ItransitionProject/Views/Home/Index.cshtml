@@ -1,0 +1,28 @@
+﻿@model IEnumerable<ItransitionProject.Models.Overview>
+@{
+    ViewData["Title"] = "Home Page";
+}
+<form>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach(var item in Model)
+        {
+             <div class="col">
+                <div class="card h-100" >
+                    <img src="@item.PictureOverview" class="card-img-top"/>
+                    <div class="card-body">
+                        <div class="card-card-title">
+                            <h5>@item.Title</h5>
+                        </div>
+                        <div class="card-text">
+                            <p>@item.ShortDescription</p>
+                        </div>
+                        @if (this.User.Identity.IsAuthenticated)
+                        {
+                            <button name="button" class="btn btn-primary" value="@item.Idoverview" asp-action="ViewOverview" >Read More...</button>
+                        }
+                    </div>
+                </div>
+            </div>   
+        }
+    </div>
+</form>
