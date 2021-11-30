@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
+
+
 namespace ItransitionProject
 {
     public class Startup
@@ -17,9 +19,12 @@ namespace ItransitionProject
         {
             
             string connection = Configuration.GetConnectionString("DefaultConnection");
-            
+
             services.AddDbContext<SiteReviewContext>(options =>
-                options.UseSqlServer(connection));
+                options.UseSqlServer(connection, options => options.EnableRetryOnFailure(maxRetryCount: 2,
+                maxRetryDelay: TimeSpan.FromSeconds(5),
+                errorNumbersToAdd: new int[] { 2 })));
+                    
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => //CookieAuthenticationOptions
                 {

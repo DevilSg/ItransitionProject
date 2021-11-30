@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace ItransitionProject.Models
 {
@@ -28,7 +29,10 @@ namespace ItransitionProject.Models
             if (!optionsBuilder.IsConfigured)
             {
 
-                optionsBuilder.UseSqlServer("Server=USER-PC\\SQL_EXPRESS;Database=SiteReview;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.100.171,1433;Initial Catalog=SiteReview;Integrated Security=False;User ID=Devil;Password=123;", options => options.EnableRetryOnFailure(maxRetryCount: 2,
+                maxRetryDelay: TimeSpan.FromSeconds(5),
+                errorNumbersToAdd: new int[] { 2 }));
+                
             }
         }
 
