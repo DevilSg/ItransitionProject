@@ -1,0 +1,10 @@
+﻿@model IEnumerable<ItransitionProject.Models.User>
+<form method="get">
+    @foreach (var item in Model)
+    {
+       
+       <li>    
+            @Html.ActionLink(item.UserName,"Personal", new { id=item.Iduser})
+       </li>
+    }
+ </form>

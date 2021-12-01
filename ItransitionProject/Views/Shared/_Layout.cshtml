@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -24,12 +25,21 @@
                             <li>
                                 <a asp-action="CreateOverview" class="nav-link text-dark">Create Overview</a> 
                             </li>
+                            @if (this.User.IsInRole("admin"))
+                            {
+                                <li>
+                                    <a asp-action="Users" class="nav-link text-dark">Users</a> 
+                                </li>
+                            }
                         }
                     </ul>
                 </div>
                 <form class="d-flex">
                   @if (this.User.Identity.IsAuthenticated)
                     {
+                         
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Personal">@User.Identity.Name</a>
+
                         <button class="btn btn-outline-success me-2" asp-action="Logout" asp-controller="Account">Logout</button>
                     }
                     else

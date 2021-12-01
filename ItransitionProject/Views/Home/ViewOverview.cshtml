@@ -13,6 +13,9 @@
             <p>@Html.DisplayFor(model=>model.FkgroupNavigation.GroupName)</p>
         </div>
         <div class="text">
+            <p>@Html.DisplayFor(model=>model.FkuserNavigation.UserName)</p>
+        </div>
+        <div class="text">
            @foreach(var item in Model.OverTags)
            {
             <p>@Html.DisplayFor(model=>item.FktagNavigation.TagName)</p>

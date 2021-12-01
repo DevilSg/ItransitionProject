@@ -29,12 +29,12 @@ namespace ItransitionProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                User? user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == model.UserName && u.UserPassword == model.UserPassword);
+                User? user = await _context.Users.Include(u=>u.FkroleNavigation).FirstOrDefaultAsync(u => u.UserName == model.UserName && u.UserPassword == model.UserPassword);
                 foreach (var s in _context.Users.ToList())
                 {
                     if (user?.UserName == s.UserName && user?.UserPassword == s.UserPassword)
                     {
-                        await Authenticate(model.UserName);
+                        await Authenticate(user);
                         return RedirectToAction("Index", "Home");
                     }
                 }
@@ -58,10 +58,16 @@ namespace ItransitionProject.Controllers
                 if (user == null)
                 {
                     // добавляем пользователя в бд
-                    _context.Users.Add(new User { UserName = model.UserName, UserPassword = model.UserPassword });
+                    user = new User { UserName = model.UserName, UserPassword = model.UserPassword };
+                   
+                    RoleUser? userRole = await _context.RoleUsers.FirstOrDefaultAsync(r => r.RoleName == "user");
+                    if (userRole != null)
+                        user.FkroleNavigation = userRole;
+
+                    _context.Users.Add(user);
                     await _context.SaveChangesAsync();
 
-                    await Authenticate(model.UserName); // аутентификация
+                    await Authenticate(user); // аутентификация
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -71,12 +77,14 @@ namespace ItransitionProject.Controllers
             return View(model);
         }
 
-        private async Task Authenticate(string userName)
+        private async Task Authenticate(User user)
         {
             // создаем один claim
             var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.UserName),
+                
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, user.FkroleNavigation.RoleName)
             };
             // создаем объект ClaimsIdentity
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);

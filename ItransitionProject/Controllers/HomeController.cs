@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Linq;
+using System.Security.Claims;
 
 namespace ItransitionProject.Controllers
 {
@@ -12,11 +14,6 @@ namespace ItransitionProject.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly SiteReviewContext _context;
-
-        
-        
-
-        
 
         public HomeController(ILogger<HomeController> logger,SiteReviewContext context)
         {
@@ -28,9 +25,25 @@ namespace ItransitionProject.Controllers
         {
             return View(_context.Overviews.ToList());
         }
+        public IActionResult Users() 
+        {
+            return View(_context.Users.ToList());
+        }
+        
+        public IActionResult Personal(int id)
+        {
+            
+            var userName = User.Identity.Name;
+            if (this.User.IsInRole("admin"))
+            {
+
+                return View(_context.Overviews.Where(u => u.Fkuser == id).ToList());
+            }
+            return View(_context.Overviews.Where(u => u.FkuserNavigation.UserName == userName).ToList());
+        }
         
 
-        public IActionResult CreateOverview(/*int id*/)
+        public IActionResult CreateOverview()
         {
             
             ViewBag.TagList = new MultiSelectList(_context.TagOverviews, "Idtag", "TagName");
@@ -42,25 +55,25 @@ namespace ItransitionProject.Controllers
         
 
         [HttpPost]
-        public IActionResult CreateOverview(Overview overview, int[] tags, TagOverview tag)
+        public IActionResult CreateOverview(Overview overview, int[] tags)
         {
             
             _context.Add(overview);
             _context.SaveChanges();
+            overview.Fkuser =  _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name).Iduser;
             
             foreach (var item in tags) 
             {
                 _context.OverTags.Add(new OverTag { Fktag=item,Fkoverview=overview.Idoverview});
             }
-
             _context.SaveChanges();
 
             return RedirectToAction("Index");
         }
 
         public IActionResult ViewOverview(int button)
-        {
-            var result = _context.Overviews.Include(o => o.FkgroupNavigation).Include(o=>o.OverTags).ThenInclude(o=>o.FktagNavigation).FirstOrDefault(p => p.Idoverview == button);
+        { 
+            var result = _context.Overviews.Include(o => o.FkgroupNavigation).Include(o=>o.OverTags).ThenInclude(o=>o.FktagNavigation).Include(o=>o.FkuserNavigation).FirstOrDefault(p => p.Idoverview == button);
             return View(result);
         }
         
