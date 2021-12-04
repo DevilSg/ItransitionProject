@@ -14,10 +14,13 @@ namespace ItransitionProject.Models
         public string Title { get; set; } = null!;
         public int? Fkgroup { get; set; }
         public int? Fkuser { get; set; }
-        public string ShortDescription { get; set; } = null!;
         public string TextOverview { get; set; } = null!;
         public string PictureOverview { get; set; } = null!;
         public int RateOverview { get; set; }
+        public int? LikeUsers { get; set; }
+        public int? RateUsers { get; set; }
+
+        public DateTime DateOverview = DateTime.Now;
 
         public virtual GroupOverview? FkgroupNavigation { get; set; }
         public virtual User? FkuserNavigation { get; set; }

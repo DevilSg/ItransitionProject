@@ -3,49 +3,41 @@
     ViewBag.Title = "Login";
 }
 
-@*<form asp-action="Login" asp-controller="Account" asp-antiforgery="true">
-<div class="validation" asp-validation-summary="ModelOnly"></div>
-      <div class="row mb-3">
-        <div class="form-group">
-            <label class="col-sm-2 col-form-label" asp-for="UserName">Name</label>
-            <div class="col-sm-10">
-              <input name="UserName" type="text" asp-for="UserName"  class="form-control" />
-              <span asp-validation-for="UserName"></span>
-            </div>
-        </div>
-      </div>
-      <div class="form-group">
-            <label class="col-sm-2 col-form-label" asp-for="UserPassword">Введите пароль</label>
-            <div class="col-sm-10">
-                <input asp-for="UserPassword" />
-                <span asp-validation-for="UserPassword" />
-            </div>
-      </div>
-      <div class="row mb-3">
-        <label class="col-sm-2 col-form-label">Password</label>
-        <div class="col-sm-10">
-          <input name="UserPassword"  type="password" class="form-control"  >
-        </div>
-      </div>
-      <div class="form-group">
-        <button type="submit" class="btn btn-primary">Log in</button>
-      </div>
-</form>*@
 <form asp-action="Login" asp-controller="Account" asp-anti-forgery="true">
-    <div class="validation" asp-validation-summary="ModelOnly"></div>
-    <div>
-        <div class="form-group">
-            <label asp-for="UserName">Введите UserName</label>
-            <input type="text" asp-for="UserName" />
-            <span asp-validation-for="UserName" />
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+            <div class="card shadow-2-strong" style="border-radius: 1rem;">
+              <div class="card-body p-5 text-center">
+
+                <h3 class="mb-5">Sign in</h3>
+
+                <div class="form-outline mb-4">
+                      <label asp-for="UserName" class="form-label">Введите UserName</label>
+                      <input type="text" asp-for="UserName" class="form-control form-control-lg"/>
+                      <span asp-validation-for="UserName" />
+                </div>
+
+                <div class="form-outline mb-4">
+                  <label asp-for="UserPassword" class="form-label">Введите пароль</label>
+                  <input asp-for="UserPassword" class="form-control form-control-lg" />
+                  <span asp-validation-for="UserPassword" />
+                </div>
+
+
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
+
+                <hr class="my-4">
+                <div class="form-outline mb-4">
+                    <button class="btn btn-lg btn-block btn-primary" style="background-color: #dd4b39;" type="submit">Sign in with google</button>
+                </div>
+                <div class="form-outline mb-4">
+                    <button class="btn btn-lg btn-block btn-primary" style="background-color: #3b5998;" type="submit">Sign in with facebook</button>
+                </div>
+
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="form-group">
-            <label asp-for="UserPassword">Введите пароль</label>
-            <input asp-for="UserPassword" />
-            <span asp-validation-for="UserPassword" />
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Войти" class="btn btn-outline-dark" />
-        </div>
-    </div>
+      </div>
 </form>

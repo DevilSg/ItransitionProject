@@ -21,9 +21,26 @@ namespace ItransitionProject.Controllers
             _context = context;
         }
         
-        public IActionResult Index()
+        public IActionResult Index(string searchString)
         {
-            return View(_context.Overviews.ToList());
+
+
+            ViewBag.Tags = _context.TagOverviews.Select(o => o.TagName).ToList();
+            var posts = from m in _context.Overviews
+                         select m;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                if (searchString == _context.Overviews.FirstOrDefault(u => u.Title == searchString)?.Title)
+                {
+                    posts = posts.Where(s => s.Title!.Contains(searchString));
+                }
+                else
+                    posts = posts.Where(s => s.TextOverview!.Contains(searchString));
+
+                return View(posts);
+            }
+            List<Overview>sort = posts.OrderByDescending(o => o.DateOverview).ToList();
+            return View(sort);
         }
         public IActionResult Users() 
         {
@@ -45,7 +62,7 @@ namespace ItransitionProject.Controllers
 
         public IActionResult CreateOverview()
         {
-            
+            ViewBag.data = _context.TagOverviews.ToList();
             ViewBag.TagList = new MultiSelectList(_context.TagOverviews, "Idtag", "TagName");
             
             ViewData["Fkgroup"] = new SelectList(_context.GroupOverviews, "Idgroup", "GroupName");

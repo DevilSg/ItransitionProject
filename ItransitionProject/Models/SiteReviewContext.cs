@@ -94,15 +94,15 @@ namespace ItransitionProject.Models
 
                 entity.Property(e => e.Idoverview).HasColumnName("IDOverview");
 
+                entity.Property(e => e.DateOverview).HasColumnType("datetime");
+
                 entity.Property(e => e.Fkgroup).HasColumnName("FKGroup");
 
                 entity.Property(e => e.Fkuser).HasColumnName("FKUser");
 
                 entity.Property(e => e.PictureOverview).HasMaxLength(200);
 
-                entity.Property(e => e.ShortDescription).HasMaxLength(1000);
-
-                entity.Property(e => e.TextOverview).HasColumnType("text");
+                entity.Property(e => e.TextOverview).HasColumnType("nvarchar(MAX)");
 
                 entity.Property(e => e.Title).HasMaxLength(50);
 

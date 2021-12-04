@@ -2,6 +2,19 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+
+
+ <div>
+
+        @foreach(var item in ViewBag.Tags)
+        {
+	        <span class="border border-light">
+	            <a href="#">@item</a>
+	         </span>
+        }
+
+</div>
+
 <form>
     <div class="row row-cols-1 row-cols-md-3 g-4">
         @foreach(var item in Model)
@@ -13,16 +26,26 @@
                         <div class="card-card-title">
                             <h5>@item.Title</h5>
                         </div>
-                        <div class="card-text">
-                            <p>@item.ShortDescription</p>
+                        <div class="card-text" >
+                            <p class="size">@item.TextOverview</p>
                         </div>
                         @if (this.User.Identity.IsAuthenticated)
                         {
                             <button name="button" class="btn btn-primary" value="@item.Idoverview" asp-action="ViewOverview" >Read More...</button>
+                            <i class="bi bi-hand-thumbs-up"><p>@item.LikeUsers</p></i>  
                         }
+                        <div class="card-text" >
+                            <p class="size"><font color="grey">Time add: @item.DateOverview</font></p>
+                        </div>
                     </div>
                 </div>
             </div>   
         }
+        
     </div>
 </form>
+
+@*<select disabled asp-items="@ViewBag.Tags"></select>*@
+
+
+

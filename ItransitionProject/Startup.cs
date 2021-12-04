@@ -57,7 +57,7 @@ namespace ItransitionProject
 
             app.UseEndpoints(endpoints =>
             {
-                //endpoints.MapControllerRoute("admin","{area:exists}/controller=Home}/{action=Index}/{id?}");
+                
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

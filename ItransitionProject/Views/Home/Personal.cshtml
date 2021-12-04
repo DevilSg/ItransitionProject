@@ -1,23 +1,25 @@
 ﻿@model IEnumerable<ItransitionProject.Models.Overview>
 
-<form>
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        @foreach(var item in Model)
-        {
-             <div class="col">
-                <div class="card h-100" >
-                    <img src="@item.PictureOverview" class="card-img-top"/>
-                    <div class="card-body">
-                        <div class="card-card-title">
-                            <h5>@item.Title</h5>
+@foreach(var item in Model)
+{
+    <form>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+                    <div class="col">
+                    <div class="card h-100" >
+                        <img src="@item.PictureOverview" class="card-img-top"/>
+                        <div class="card-body">
+                            <div class="card-card-title">
+                                <h5>@item.Title</h5>
+                            </div>
+                            <div class="card-text">
+                                <p class="size">@item.TextOverview</p>
+                            </div>
+                            <button name="button" class="btn btn-primary" value="@item.Idoverview" asp-action="ViewOverview" >Read More...</button>
                         </div>
-                        <div class="card-text">
-                            <p>@item.ShortDescription</p>
-                        </div>
-                        <button name="button" class="btn btn-primary" value="@item.Idoverview" asp-action="ViewOverview" >Read More...</button>
                     </div>
-                </div>
-            </div>   
-        }
-    </div>
-</form>
+                </div>   
+
+        </div>
+        
+    </form>
+}
