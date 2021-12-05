@@ -14,6 +14,5 @@ namespace ItransitionProject.Models
         public string TagName { get; set; } = null!;
 
         public virtual ICollection<OverTag> OverTags { get; set; }
-        
     }
 }

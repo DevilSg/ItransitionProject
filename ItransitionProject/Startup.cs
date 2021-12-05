@@ -1,4 +1,5 @@
-﻿using ItransitionProject.Models;
+﻿using ItransitionProject.CloudStorage;
+using ItransitionProject.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
@@ -30,9 +31,11 @@ namespace ItransitionProject
                 {
                     options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
                     options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                    
                 });
-            
 
+
+            services.AddSingleton<ICloudStorage, GoogleCloudStorage>();
             services.AddControllersWithViews();
         }
 
@@ -54,13 +57,16 @@ namespace ItransitionProject
 
             app.UseAuthentication();
             app.UseAuthorization();
+           
 
             app.UseEndpoints(endpoints =>
             {
                 
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                
             });
         }
     }

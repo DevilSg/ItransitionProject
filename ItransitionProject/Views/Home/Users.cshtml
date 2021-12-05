@@ -2,9 +2,11 @@
 <form method="get">
     @foreach (var item in Model)
     {
-       
-       <li>    
-            @Html.ActionLink(item.UserName,"Personal", new { id=item.Iduser})
-       </li>
+       <ul class="list-group list-group-flush">
+           <li class="list-group-item">   
+                @Html.ActionLink(item.UserName,"Personal", new { id=item.Iduser})
+                <button name="id" class="btn btn-primary btn-sm" asp-action="DeleteUser" asp-controller="Home" asp-route-id="@item.Iduser">Удалить</button>
+           </li>
+       </ul>
     }
  </form>

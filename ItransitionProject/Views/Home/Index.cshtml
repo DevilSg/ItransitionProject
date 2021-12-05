@@ -2,26 +2,57 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+<style>
+  .tags {
+  padding: 50px;
+  width: -moz-fit-content;
+  border: 4px black;
+  border-width:thin;
+  border-style:solid;
+  border-color:#adadad;
+  border-radius:7px;
+  color: white;
+  box-shadow: 0 0 5px #dbdbdb;
+  font-family: Arial;
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 40px;
+}
+
+.tags a {
+  white-space: nowrap;
+  width: auto;
+  border-radius: 13px;
+  background-color: #334fff;
+  padding: 5px 10px 5px 10px;
+  text-decoration: none;
+  color: #ffffff;
+  
+
+}
 
 
- <div>
+</style>
 
+ <div class="tags">
+
+	  
         @foreach(var item in ViewBag.Tags)
         {
-	        <span class="border border-light">
 	            <a href="#">@item</a>
-	         </span>
         }
 
+	    
 </div>
 
 <form>
+    <br></br>
     <div class="row row-cols-1 row-cols-md-3 g-4">
         @foreach(var item in Model)
         {
              <div class="col">
                 <div class="card h-100" >
-                    <img src="@item.PictureOverview" class="card-img-top"/>
+                    <img src="@Url.Content(@item.ImageUrl)" class="card-img-top"/>
                     <div class="card-body">
                         <div class="card-card-title">
                             <h5>@item.Title</h5>
@@ -31,11 +62,11 @@
                         </div>
                         @if (this.User.Identity.IsAuthenticated)
                         {
-                            <button name="button" class="btn btn-primary" value="@item.Idoverview" asp-action="ViewOverview" >Read More...</button>
-                            <i class="bi bi-hand-thumbs-up"><p>@item.LikeUsers</p></i>  
+                            <button name="id" class="btn btn-primary" value="@item.Idoverview" asp-action="ViewOverview" >Read More...</button>
+                            
                         }
                         <div class="card-text" >
-                            <p class="size"><font color="grey">Time add: @item.DateOverview</font></p>
+                            <p class="size"><font color="grey">Time add: @item.DateOverview.ToString("dd/MM HH:mm")</font></p>
                         </div>
                     </div>
                 </div>
@@ -45,7 +76,7 @@
     </div>
 </form>
 
-@*<select disabled asp-items="@ViewBag.Tags"></select>*@
+
 
 
 

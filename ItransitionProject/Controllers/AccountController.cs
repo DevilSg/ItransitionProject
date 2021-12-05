@@ -2,6 +2,7 @@
 using ItransitionProject.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Facebook;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -20,8 +21,10 @@ namespace ItransitionProject.Controllers
         [HttpGet]
         public IActionResult Login()
         {
+           
             return View();
         }
+        
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -57,7 +60,7 @@ namespace ItransitionProject.Controllers
                 User? user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == model.UserName);
                 if (user == null)
                 {
-                    // добавляем пользователя в бд
+                    
                     user = new User { UserName = model.UserName, UserPassword = model.UserPassword };
                    
                     RoleUser? userRole = await _context.RoleUsers.FirstOrDefaultAsync(r => r.RoleName == "user");
@@ -67,7 +70,7 @@ namespace ItransitionProject.Controllers
                     _context.Users.Add(user);
                     await _context.SaveChangesAsync();
 
-                    await Authenticate(user); // аутентификация
+                    await Authenticate(user); 
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -79,17 +82,19 @@ namespace ItransitionProject.Controllers
 
         private async Task Authenticate(User user)
         {
-            // создаем один claim
+            
             var claims = new List<Claim>
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, user.UserName),
                 
                 new Claim(ClaimsIdentity.DefaultRoleClaimType, user.FkroleNavigation.RoleName)
             };
-            // создаем объект ClaimsIdentity
+            
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-            // установка аутентификационных куки
+            
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
+            
+            
         }
 
         public async Task<IActionResult> Logout()

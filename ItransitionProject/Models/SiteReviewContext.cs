@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace ItransitionProject.Models
 {
@@ -28,11 +27,7 @@ namespace ItransitionProject.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-
-                optionsBuilder.UseSqlServer("Data Source=192.168.100.171,1433;Initial Catalog=SiteReview;Integrated Security=False;User ID=Devil;Password=123;", options => options.EnableRetryOnFailure(maxRetryCount: 2,
-                maxRetryDelay: TimeSpan.FromSeconds(5),
-                errorNumbersToAdd: new int[] { 2 }));
-                
+                optionsBuilder.UseSqlServer("Data Source=192.168.100.171,1433;Initial Catalog=SiteReview;Integrated Security=False;User ID=Devil;Password=123;");
             }
         }
 
@@ -56,13 +51,9 @@ namespace ItransitionProject.Models
             modelBuilder.Entity<OverTag>(entity =>
             {
                 entity.HasKey(e => e.IdoverTag)
-                    .HasName("PK__OverTag__0DDCDBEE3DFCEC34");
+                    .HasName("PK__OverTag__0DDCDBEE72D02351");
 
                 entity.ToTable("OverTag");
-
-                entity.HasIndex(e => e.Fkoverview, "IX_OverTag_FKOverview");
-
-                entity.HasIndex(e => e.Fktag, "IX_OverTag_FKTag");
 
                 entity.Property(e => e.IdoverTag).HasColumnName("IDOverTag");
 
@@ -84,13 +75,9 @@ namespace ItransitionProject.Models
             modelBuilder.Entity<Overview>(entity =>
             {
                 entity.HasKey(e => e.Idoverview)
-                    .HasName("PK__Overview__C7F36726F301D99F");
+                    .HasName("PK__Overview__C7F36726A94B49C2");
 
                 entity.ToTable("Overview");
-
-                entity.HasIndex(e => e.Fkgroup, "IX_Overview_FKGroup");
-
-                entity.HasIndex(e => e.Fkuser, "IX_Overview_FKUser");
 
                 entity.Property(e => e.Idoverview).HasColumnName("IDOverview");
 
@@ -100,9 +87,9 @@ namespace ItransitionProject.Models
 
                 entity.Property(e => e.Fkuser).HasColumnName("FKUser");
 
-                entity.Property(e => e.PictureOverview).HasMaxLength(200);
+                entity.Property(e => e.ImageUrl).HasMaxLength(200);
 
-                entity.Property(e => e.TextOverview).HasColumnType("nvarchar(MAX)");
+                entity.Property(e => e.StorageName).HasMaxLength(200);
 
                 entity.Property(e => e.Title).HasMaxLength(50);
 
