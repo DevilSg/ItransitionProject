@@ -1,4 +1,5 @@
-﻿@model ItransitionProject.Models.Overview 
+﻿
+@model ItransitionProject.Models.Overview 
 
 @{
     ViewBag.Title = "CreateOverview";
@@ -44,10 +45,12 @@
   <div class="row mb-3">
     <label asp-for="ImageFile" class="col-sm-2 col-form-label">Picture</label>
     <div class="col-sm-10">
-      <input type="file" asp-for="ImageFile" class="form-control" />
+      <input type="file" asp-for="ImageFile" class="form-control"  multiple />
     </div>
   </div>
-       
+  
+  
+
   <button type="submit" class="btn btn-primary" >Submit</button>
 </form>
 
