@@ -42,22 +42,16 @@ namespace ItransitionProject.Controllers
 
 
             ViewBag.Tags = _context.TagOverviews.Select(o => o.TagName).ToList();
-            var posts = from m in _context.Overviews
-                         select m;
+            List<Overview> posts = _context.Overviews.ToList();
             if (!String.IsNullOrEmpty(searchString))
             {
-                if (searchString == _context.Overviews.FirstOrDefault(u => u.Title == searchString)?.Title)
-                {
-                    posts = posts.Where(s => s.Title!.Contains(searchString));
-                }
-                else
-                    posts = posts.Where(s => s.TextOverview!.Contains(searchString));
-
+                posts = _context.Overviews.Where(u => u.Title.ToLower().Contains(searchString.ToLower()) || u.TextOverview.ToLower().Contains(searchString.ToLower())).ToList();
                 return View(posts);
             }
-            List<Overview>sort = posts.OrderByDescending(o => o.DateOverview).ToList();
+            var sort = posts.OrderByDescending(o => o.DateOverview);
             return View(sort);
         }
+        
 
         public IActionResult Users()
         {
@@ -97,15 +91,32 @@ namespace ItransitionProject.Controllers
         {    
             await _cloudStorage.DeleteFileAsync(overview.StorageName);    
             await UploadFile(overview);
-            overview.Fkuser = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name).Iduser;
-            foreach (var item in tags)
+
+            var oldoverview = _context.Overviews.FirstOrDefault(o => o.Idoverview == id);
+            if (oldoverview!=null) 
             {
-                _context.OverTags.Update(new OverTag { Fktag = item });
-                _context.Entry(overTag).State = EntityState.Modified;
+                oldoverview.Title=overview.Title;
+                oldoverview.Fkgroup=overview.Fkgroup;
+                oldoverview.TextOverview=overview.TextOverview;
+                oldoverview.ImageUrl=overview.ImageUrl;
+                oldoverview.StorageName=overview.StorageName;
+                oldoverview.RateOverview=overview.RateOverview;
+                oldoverview.DateOverview=overview.DateOverview;
             }
-            _context.Entry(overview).State = EntityState.Modified;
+            _context.Update(oldoverview);
             _context.SaveChanges();
-            
+
+            if (tags != null)
+            {
+                _context.OverTags.RemoveRange(_context.OverTags.Where(i=>i.Fkoverview==id));
+                _context.SaveChanges();
+                foreach (var item in tags)
+                {
+                    _context.OverTags.Add(new OverTag { Fktag = item,Fkoverview=id });
+                    _context.SaveChanges();
+                }
+            }
+
             return RedirectToAction("Index");
         }
 

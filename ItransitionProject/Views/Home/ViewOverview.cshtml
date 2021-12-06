@@ -1,25 +1,42 @@
 ﻿@model ItransitionProject.Models.Overview
 
-<form>           
-    <img src="@Model.ImageUrl" class="card-img-top"/>
-    <div class="body">
-        <div class="title">
-            <h5>@Model.Title</h5>
+<form>
+    <div class="conteiner">
+        <div class="row">
+            <div class="col-8">
+                <div class="row">
+                    <div class="col-4">
+                        <ul class="list-group">
+                            Tags
+                            @foreach(var item in Model.OverTags)
+                            {
+                               <li class="list-group-item">@Html.DisplayFor(model=>item.FktagNavigation.TagName)</li>
+                            }
+                        </ul>
+                        <br></br>
+                        <ul class="list-group">
+                            Group
+                               <li class="list-group-item">@Html.DisplayFor(model=>model.FkgroupNavigation.GroupName)</li>
+                        </ul>
+                    </div>
+                    <div class="col-8">
+                        <div class="card">
+                            <div class="card-header">
+                               Rate: @Model.RateOverview/10
+                            </div>
+                            <img src="@Model.ImageUrl" class="card-img-top"/>
+                            <div class="card-body">
+                                <h5 class="card-title"></h5>
+                                    <p class="card-text">@Model.TextOverview</p>
+                                <div class="card-footer text-muted">
+                                    <p>Author: @Html.DisplayFor(model=>model.FkuserNavigation.UserName)</p>
+                                </div>
+                        
+                            </div>  
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="text">
-            <p>@Model.TextOverview</p>
-        </div>
-        <div class="text">
-            <p>@Html.DisplayFor(model=>model.FkgroupNavigation.GroupName)</p>
-        </div>
-        <div class="text">
-            <p>@Html.DisplayFor(model=>model.FkuserNavigation.UserName)</p>
-        </div>
-        <div class="text">
-           @foreach(var item in Model.OverTags)
-           {
-            <p>@Html.DisplayFor(model=>item.FktagNavigation.TagName)</p>
-           }
-        </div>
-    </div>               
+    </div>
 </form>

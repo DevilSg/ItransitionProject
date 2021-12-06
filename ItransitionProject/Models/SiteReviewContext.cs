@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -29,6 +30,8 @@ namespace ItransitionProject.Models
             {
                 optionsBuilder.UseSqlServer("Data Source=192.168.100.171,1433;Initial Catalog=SiteReview;Integrated Security=False;User ID=Devil;Password=123;");
             }
+            optionsBuilder.LogTo(Console.WriteLine);
+            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
