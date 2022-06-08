@@ -7,7 +7,7 @@
                 <div class="row">
                     <div class="col-4">
                         <ul class="list-group">
-                            Tags
+                            Тег
                             @foreach(var item in Model.OverTags)
                             {
                                <li class="list-group-item">@Html.DisplayFor(model=>item.FktagNavigation.TagName)</li>
@@ -15,28 +15,43 @@
                         </ul>
                         <br></br>
                         <ul class="list-group">
-                            Group
+                            Жанр
                                <li class="list-group-item">@Html.DisplayFor(model=>model.FkgroupNavigation.GroupName)</li>
                         </ul>
                     </div>
                     <div class="col-8">
                         <div class="card">
                             <div class="card-header">
-                               Rate: @Model.RateOverview/10
+                               Рейтинг: @Model.RateOverview/10
                             </div>
                             <img src="@Model.ImageUrl" class="card-img-top"/>
                             <div class="card-body">
                                 <h5 class="card-title"></h5>
                                     <p class="card-text">@Model.TextOverview</p>
                                 <div class="card-footer text-muted">
-                                    <p>Author: @Html.DisplayFor(model=>model.FkuserNavigation.UserName)</p>
+                                    <p>Автор: @Html.DisplayFor(model=>model.FkuserNavigation.UserName)</p>
                                 </div>
-                        
-                            </div>  
+                            </div>
+                            
                         </div>
+                        <br>Комментарии</br>
+                        @foreach (var item in Model.OverComs)
+                        {
+                            <li class="list-group-item">@Html.DisplayFor(model=>item.FkcommentNavigation.Comment)
+                                <div class="card-footer text-muted">
+                                    <p>Пользователь: @item.FkusersNavigation.UserName @Html.DisplayFor(model=>item.FkcommentNavigation.DateComment)</p>
+                            </div>
+                            @if (this.User.IsInRole("admin")|| @item.FkusersNavigation.UserName==this.User.Identity.Name)
+                            {
+                            <button class="btn btn-primary" asp-route-id="@item.FkcommentNavigation.IdcommentOverview" asp-action="DeleteComment" class="nav-link text-dark">Удалить</button>
+                            <button class="btn btn-primary" asp-route-id="@item.FkcommentNavigation.IdcommentOverview" asp-action="EditComment" class="nav-link text-dark">Редактировать</button>
+                            }
+                        </li>
+                        }
                     </div>
                 </div>
             </div>
         </div>
     </div>
+          <button class="btn btn-primary" asp-route-id="@Model.Idoverview" asp-action="CreateComment" class="nav-link text-dark">Создать Комментарий</button> 
 </form>

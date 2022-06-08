@@ -1,0 +1,20 @@
+﻿@model ItransitionProject.Models.GroupOverview
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>Название</dt>
+        <dd>
+            @Html.DisplayFor(model => model.GroupName)
+        </dd>
+ 
+        
+    </dl>
+ 
+    <div>
+        <form asp-controller="Home" asp-action="ConfirmDeleteGroup" method="post">
+            <div class="form-group">
+                 <button name="id" class="btn btn-primary" asp-action="ConfirmDeleteGroup" asp-controller="Home" value="@Model.Idgroup">Удалить</button>
+            </div>
+        </form>
+    </div>
+</div>

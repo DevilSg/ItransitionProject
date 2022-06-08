@@ -7,7 +7,8 @@ namespace ItransitionProject.Models
     {
         public User()
         {
-            Overviews = new HashSet<Overview>();
+            OverComs = new List<OverCom>();
+            Overviews = new List<Overview>();
         }
 
         public int Iduser { get; set; }
@@ -15,7 +16,8 @@ namespace ItransitionProject.Models
         public string? UserPassword { get; set; }
         public int? Fkrole { get; set; }
 
-        public virtual RoleUser? FkroleNavigation { get; set; }
-        public virtual ICollection<Overview> Overviews { get; set; }
+        public RoleUser? FkroleNavigation { get; set; }
+        public List<OverCom> OverComs { get; set; }
+        public List<Overview> Overviews { get; set; }
     }
 }

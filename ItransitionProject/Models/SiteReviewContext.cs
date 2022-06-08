@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -17,25 +16,40 @@ namespace ItransitionProject.Models
         {
         }
 
-        public virtual DbSet<GroupOverview> GroupOverviews { get; set; } = null!;
-        public virtual DbSet<OverTag> OverTags { get; set; } = null!;
-        public virtual DbSet<Overview> Overviews { get; set; } = null!;
-        public virtual DbSet<RoleUser> RoleUsers { get; set; } = null!;
-        public virtual DbSet<TagOverview> TagOverviews { get; set; } = null!;
-        public virtual DbSet<User> Users { get; set; } = null!;
+        public DbSet<CommentOverview> CommentOverviews { get; set; }
+        public DbSet<GroupOverview> GroupOverviews { get; set; }
+        public  DbSet<OverCom> OverComs { get; set; }
+        public  DbSet<OverTag> OverTags { get; set; } 
+        public  DbSet<Overview> Overviews { get; set; }
+        public  DbSet<RoleUser> RoleUsers { get; set; }
+        public DbSet<TagOverview> TagOverviews { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Data Source=192.168.100.171,1433;Initial Catalog=SiteReview;Integrated Security=False;User ID=Devil;Password=123;");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=USER-PC\\SQL_EXPRESS;Database=SiteReview;Trusted_Connection=True;");
             }
-            optionsBuilder.LogTo(Console.WriteLine);
-            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<CommentOverview>(entity =>
+            {
+                entity.HasKey(e => e.IdcommentOverview)
+                    .HasName("PK__CommentO__0C524CEFCCA9ABA9");
+
+                entity.ToTable("CommentOverview");
+
+                entity.Property(e => e.IdcommentOverview).HasColumnName("IDCommentOverview");
+
+                entity.Property(e => e.Comment).HasMaxLength(100);
+
+                entity.Property(e => e.DateComment).HasColumnType("datetime");
+            });
+
             modelBuilder.Entity<GroupOverview>(entity =>
             {
                 entity.HasKey(e => e.Idgroup)
@@ -49,6 +63,38 @@ namespace ItransitionProject.Models
                 entity.Property(e => e.Idgroup).HasColumnName("IDGroup");
 
                 entity.Property(e => e.GroupName).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<OverCom>(entity =>
+            {
+                entity.HasKey(e => e.IdoverCom)
+                    .HasName("PK__OverCom__0DDCDBEEDCBEF12B");
+
+                entity.ToTable("OverCom");
+
+                entity.Property(e => e.IdoverCom).HasColumnName("IDOverCom");
+
+                entity.Property(e => e.Fkcomment).HasColumnName("FKComment");
+
+                entity.Property(e => e.Fkoverviews).HasColumnName("FKOverviews");
+
+                entity.Property(e => e.Fkusers).HasColumnName("FKUsers");
+
+                entity.HasOne(d => d.FkcommentNavigation)
+                    .WithMany(p => p.OverComs)
+                    .HasForeignKey(d => d.Fkcomment)
+                    .HasConstraintName("FK_Com");
+
+                entity.HasOne(d => d.FkoverviewsNavigation)
+                    .WithMany(p => p.OverComs)
+                    .HasForeignKey(d => d.Fkoverviews)
+                    .HasConstraintName("FK_OverCom");
+
+                entity.HasOne(d => d.FkusersNavigation)
+                    .WithMany(p => p.OverComs)
+                    .HasForeignKey(d => d.Fkusers)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_UserCom");
             });
 
             modelBuilder.Entity<OverTag>(entity =>
@@ -90,9 +136,9 @@ namespace ItransitionProject.Models
 
                 entity.Property(e => e.Fkuser).HasColumnName("FKUser");
 
-                entity.Property(e => e.ImageUrl).HasMaxLength(200);
+                entity.Property(e => e.ImageUrl).HasMaxLength(400);
 
-                entity.Property(e => e.StorageName).HasMaxLength(200);
+                entity.Property(e => e.StorageName).HasMaxLength(400);
 
                 entity.Property(e => e.Title).HasMaxLength(50);
 

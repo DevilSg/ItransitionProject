@@ -9,7 +9,7 @@ namespace ItransitionProject.Models
         public int Fktag { get; set; }
         public int Fkoverview { get; set; }
 
-        public virtual Overview FkoverviewNavigation { get; set; } = null!;
-        public virtual TagOverview FktagNavigation { get; set; } = null!;
+        public Overview FkoverviewNavigation { get; set; }
+        public TagOverview FktagNavigation { get; set; }
     }
 }

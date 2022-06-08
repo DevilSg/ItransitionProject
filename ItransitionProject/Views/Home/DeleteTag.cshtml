@@ -1,0 +1,20 @@
+﻿@model ItransitionProject.Models.TagOverview
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>Название</dt>
+        <dd>
+            @Html.DisplayFor(model => model.TagName)
+        </dd>
+ 
+        
+    </dl>
+ 
+    <div>
+        <form asp-controller="Home" asp-action="ConfirmDeleteTag" method="post">
+            <div class="form-group">
+                 <button name="id" class="btn btn-primary" asp-action="ConfirmDeleteTag" asp-controller="Home" value="@Model.Idtag">Удалить</button>
+            </div>
+        </form>
+    </div>
+</div>

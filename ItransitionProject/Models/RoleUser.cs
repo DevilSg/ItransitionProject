@@ -7,12 +7,12 @@ namespace ItransitionProject.Models
     {
         public RoleUser()
         {
-            Users = new HashSet<User>();
+            Users = new List<User>();
         }
 
         public int Idrole { get; set; }
         public string RoleName { get; set; } = null!;
 
-        public virtual ICollection<User> Users { get; set; }
+        public List<User> Users { get; set; }
     }
 }

@@ -10,10 +10,10 @@
             <div class="card shadow-2-strong" style="border-radius: 1rem;">
               <div class="card-body p-5 text-center">
 
-                <h3 class="mb-5">Sign in</h3>
+                <h3 class="mb-5">Вход</h3>
 
                 <div class="form-outline mb-4">
-                      <label asp-for="UserName" class="form-label">Введите UserName</label>
+                      <label asp-for="UserName" class="form-label">Введите Никнейм</label>
                       <input type="text" asp-for="UserName" class="form-control form-control-lg"/>
                       <span asp-validation-for="UserName" />
                 </div>
@@ -25,7 +25,7 @@
                 </div>
 
 
-                <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Войти</button>
 
                 <hr class="my-4">
                 @*<div class="form-outline mb-4">
@@ -41,5 +41,9 @@
         </div>
       </div>
 </form>
-
+@section scripts{
+ 
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
              

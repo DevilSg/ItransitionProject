@@ -7,12 +7,12 @@ namespace ItransitionProject.Models
     {
         public GroupOverview()
         {
-            Overviews = new HashSet<Overview>();
+            Overviews = new List<Overview>();
         }
 
         public int Idgroup { get; set; }
         public string GroupName { get; set; } = null!;
 
-        public virtual ICollection<Overview> Overviews { get; set; }
+        public List<Overview> Overviews { get; set; }
     }
 }

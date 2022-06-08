@@ -1,0 +1,17 @@
+﻿@model ItransitionProject.Models.CommentOverview 
+
+@section scripts{
+ 
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+
+<form method=post asp-action="CreateComment">
+<div class="form-outline mb-4">
+    <label class="form-label" >Текст</label>
+    <textarea asp-for="Comment" class="form-control"  rows="4"></textarea>
+    <span asp-validation-for="Comment"></span>
+    <br></br>
+    <button type="submit" class="btn btn-primary" >добавить</button>
+</div>
+</form>

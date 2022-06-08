@@ -9,7 +9,8 @@ namespace ItransitionProject.Models
     {
         public Overview()
         {
-            OverTags = new HashSet<OverTag>();
+            OverComs = new List<OverCom>();
+            OverTags = new List<OverTag>();
         }
 
         public int Idoverview { get; set; }
@@ -19,17 +20,17 @@ namespace ItransitionProject.Models
         public string TextOverview { get; set; } = null!;
         public string ImageUrl { get; set; } = null!;
         public int RateOverview { get; set; }
-        public int? LikeUsers { get; set; }
-        public int? RateUsers { get; set; }
-        public DateTime DateOverview= DateTime.Now;
+        public DateTime DateOverview = DateTime.Now;
 
         [Display(Name = "Image File")]
         [NotMapped]
         public virtual IFormFile ImageFile { get; set; }
         public string? StorageName { get; set; }
-
-        public virtual GroupOverview? FkgroupNavigation { get; set; }
-        public virtual User? FkuserNavigation { get; set; }
-        public virtual ICollection<OverTag> OverTags { get; set; }
+        public int? RateUsers { get; set; }
+        public int? LikeUsers { get; set; }
+        public  GroupOverview? FkgroupNavigation { get; set; }
+        public  User? FkuserNavigation { get; set; }
+        public List<OverCom> OverComs { get; set; }
+        public List<OverTag> OverTags { get; set; }
     }
 }

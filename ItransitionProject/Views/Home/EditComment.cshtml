@@ -1,0 +1,9 @@
+﻿@model ItransitionProject.Models.CommentOverview
+<form method=post asp-action="EditComment" asp-route-id="@Model.IdcommentOverview" enctype="multipart/form-data">
+<div class="form-outline mb-4">
+    <label class="form-label" >Text</label>
+    <textarea asp-for="Comment" class="form-control"  rows="4"></textarea>
+    <span asp-validation-for="Comment"></span>
+  </div>
+  <button type="submit" class="btn btn-primary" >Изменить</button>
+</form>

@@ -1,37 +1,76 @@
-﻿<!DOCTYPE html>
+﻿@inject IHttpContextAccessor httpContextaccessor
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ItransitionProject</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"  />
+    
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ItransitionProject.styles.css" asp-append-version="true" />
+    @{
+        
+        var theme = httpContextaccessor.HttpContext.Request.Cookies["theme"];
+        
+        if (theme == "Светлая")
+        {
+            <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"  />
+            
+            
+        }
+        if (theme == "Темная")
+        {
+            <link rel="stylesheet" href="~/lib/bootswatch/dist/darkly/bootstrap.min.css" />
+            
+            
+        }
+    }
+   
+
+   
 </head>
+
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-action="Index">ItransitionProject</a>
                 
                 <div class="navbar-collapse collapse show d-sm-inline-flex justify-content-between" id="navbarSupportedContent">
                     <ul class="navbar-nav flex-grow-2 mr-auto">
                         <li class="nav-item">
-                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
                         </li>
                         @if (this.User.Identity.IsAuthenticated)
                         {
+                            
                             <li class="nav-item">
-                                <a asp-action="CreateOverview" class="nav-link text-dark">Create Overview</a> 
+                                <a class="nav-link" asp-action="CreateOverview" class="nav-link text-dark">Создать обзор</a> 
                             </li>
                             @if (this.User.IsInRole("admin"))
                             {
                                 <li class="nav-item">
-                                    <a asp-action="Users" class="nav-link text-dark">Users</a> 
+                                    <a class="nav-link" asp-action="Users" class="nav-link text-dark">Пользователи</a> 
+                                    
                                 </li>
+                                <li class="nav-item">
+                                 <a class="nav-link" asp-action="CreateTag" class="nav-link text-dark">Создать тег</a>
+                                 </li>
+                                 <li class="nav-item">
+                                 <a class="nav-link" asp-action="CreateGroup" class="nav-link text-dark">Создать жанр</a> 
+                                 </li>
+                                 <li class="nav-item">
+                                 <a class="nav-link" asp-action="TagList" class="nav-link text-dark">Список тегов</a> 
+                                 </li>
+                                 <li class="nav-item">
+                                 <a class="nav-link" asp-action="GroupList" class="nav-link text-dark">Список жанров</a> 
+                                 </li>
                             }
                         }
+                        
                     </ul>
                 </div>
                 <form class="d-flex">
@@ -39,21 +78,29 @@
                     {
                         @if (this.User.IsInRole("user"))
                         {
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Personal">@User.Identity.Name</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Personal">@User.Identity.Name</a>
                         }
 
-                        <button class="btn btn-outline-success me-2" asp-action="Logout" asp-controller="Account">Logout</button>
+                        <button class="btn btn-outline-success me-2" asp-action="Logout" asp-controller="Account">Выход</button>
                     }
                     else
                     {
-                        <button class="btn btn-outline-success me-sm-2" asp-action="Register" asp-controller="Account">Registration</button>
-                        <button class="btn btn-outline-success me-sm-2" asp-action="Login" asp-controller="Account">Login</button>
+                        <button class="btn btn-outline-success me-sm-2" asp-action="Register" asp-controller="Account">Регистрация</button>
+                        <button class="btn btn-outline-success me-sm-2" asp-action="Login" asp-controller="Account">Вход</button>
                     }
                    
-                  <input name="searchString" class="form-control me-sm-2" type="text" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline-success" type="submit">Search</button>
+                  <input name="searchString" class="form-control me-sm-2" type="text" placeholder="Поиск" aria-label="Поиск">
+                  <button class="btn btn-outline-success" type="submit">Поиск</button>
                 </form>
-
+                
+                <div class="row text-right m-2">
+                       <select name="theme" id="theme" onchange="reloadPage()">
+                           <option value="0" >Стандарт</option>
+                          <option value="1" >Светлая</option>
+                          <option value="2" >Темная</option>
+                       </select>
+                </div>
+                
             </div>
         </nav>
     </header>
@@ -63,11 +110,16 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - ItransitionProject - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+    
+    <script>
+  function reloadPage()
+  {
+    setTimeout(function () {
+        location.reload()
+    }, 100);
+  }
+</script>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

@@ -206,5 +206,7 @@ input.multiselect_checkbox {
     overflow: hidden;
     padding: 5px;
     text-overflow: ellipsis;
+    transition: .55s opacity, .55s visibility;
 }
+
 

@@ -1,0 +1,17 @@
+﻿@model ItransitionProject.Models.GroupOverview 
+
+@section scripts{
+ 
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+
+<form method=post asp-action="CreateGroup">
+<div class="form-outline mb-4">
+    <label class="form-label" >Текст</label>
+    <textarea asp-for="GroupName" class="form-control"  rows="4"></textarea>
+    <span asp-validation-for="GroupName"></span>
+    <br></br>
+    <button type="submit" class="btn btn-primary" >добавить</button>
+</div>
+</form>

@@ -20,6 +20,7 @@ namespace ItransitionProject
         {
             
             string connection = Configuration.GetConnectionString("DefaultConnection");
+            
 
             services.AddDbContext<SiteReviewContext>(options =>
                 options.UseSqlServer(connection, options => options.EnableRetryOnFailure(maxRetryCount: 2,
@@ -34,7 +35,7 @@ namespace ItransitionProject
                     
                 });
 
-
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<ICloudStorage, GoogleCloudStorage>();
             services.AddControllersWithViews();
         }

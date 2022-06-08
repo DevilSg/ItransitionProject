@@ -1,0 +1,13 @@
+﻿@model IEnumerable<ItransitionProject.Models.GroupOverview>
+
+<form method="get">
+    @foreach (var item in Model)
+    {
+       <ul class="list-group list-group-flush">
+           <li class="list-group-item">   
+                @Html.ActionLink(item.GroupName,"Personal", new { id=item.Idgroup})
+                <button name="id" class="btn btn-primary btn-sm" asp-action="DeleteGroup" asp-controller="Home" asp-route-id="@item.Idgroup">Удалить</button>
+           </li>
+       </ul>
+    }
+ </form>

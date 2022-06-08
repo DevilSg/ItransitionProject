@@ -5,7 +5,8 @@ namespace ItransitionProject.ViewModels
     public class RegisterModel
     {
        
-            [Required(ErrorMessage = "Не указан Email")]
+            [Required(ErrorMessage = "Не указан  имя")]
+            [DataType(DataType.Text)]
             public string UserName { get; set; }
 
             [Required(ErrorMessage = "Не указан пароль")]

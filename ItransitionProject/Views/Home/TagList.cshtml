@@ -1,0 +1,13 @@
+﻿@model IEnumerable<ItransitionProject.Models.TagOverview>
+
+<form method="get">
+    @foreach (var item in Model)
+    {
+       <ul class="list-group list-group-flush">
+           <li class="list-group-item">   
+                @Html.ActionLink(item.TagName,"Personal", new { id=item.Idtag})
+                <button name="id" class="btn btn-primary btn-sm" asp-action="DeleteTag" asp-controller="Home" asp-route-id="@item.Idtag">Удалить</button>
+           </li>
+       </ul>
+    }
+ </form>
